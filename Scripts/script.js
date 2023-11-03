@@ -4,9 +4,11 @@
 var app = angular
                  .module("Demo", ["ngRoute"])
                  .config(function ($routeProvider, $locationProvider) {
+                     $routeProvider.caseInsensitiveMatch = true;
+
                      $routeProvider
                          .when("/home", {
-                             templateUrl: "Templates/home.html",
+                             template: "<h1>Inline Template in action",
                              controller: "homeController as homeCtrl",
                              controllerAs: "homeCtrl"
                          })
