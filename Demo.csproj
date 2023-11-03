@@ -78,6 +78,7 @@
     <Content Include="index.html" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\script.js" />
     <Content Include="StudentService.asmx" />
     <Content Include="Styles.css" />
     <Content Include="Templates\courses.html" />
