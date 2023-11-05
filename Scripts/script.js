@@ -39,12 +39,22 @@ var app = angular
                      this.courses = ["C#", "VB.NET", "SQL Server", "ASP.NET"];
                  })
                  .controller("studentsController", function ($http, $route, $scope) {
-                     $scope.$on("$locationChangeStart", function (event, next, current) {
-                         if (!confirm("Are you sure you want to navigate away from this page to " + next)) {
-                             event.preventDefault();
-                         }
-                     });
                      var vm = this;
+
+                     $scope.$on("$locationChangeStart", function (event, next, current) {
+                         console.log("$locationChangeStart fired");
+                         console.log(event);
+                         console.log(next);
+                         console.log(current);
+                     });
+
+                     $scope.$on("$routeChangeStart", function (event, next, current) {
+                         console.log("$routeChangeStart fired");
+                         console.log(event);
+                         console.log(next);
+                         console.log(current);
+                     });
+
                      vm.reloadData = function () {
                          $route.reload();
                      }
