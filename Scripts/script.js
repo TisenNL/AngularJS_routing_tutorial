@@ -8,7 +8,7 @@ var app = angular
 
                      $routeProvider
                          .when("/home", {
-                             template: "<h1>Inline Template in action",
+                             templateUrl: "Templates/home.html",
                              controller: "homeController as homeCtrl",
                              controllerAs: "homeCtrl"
                          })
@@ -38,8 +38,11 @@ var app = angular
                  .controller("coursesController", function () {
                      this.courses = ["C#", "VB.NET", "SQL Server", "ASP.NET"];
                  })
-                 .controller("studentsController", function ($http) {
+                 .controller("studentsController", function ($http, $route) {
                      var vm = this;
+                     vm.reloadData = function () {
+                         $route.reload();
+                     }
 
                      $http.get("StudentService.asmx/GetAllStudents")
                           .then(function (response) {
