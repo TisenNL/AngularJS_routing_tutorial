@@ -38,21 +38,21 @@ var app = angular
                  .controller("coursesController", function () {
                      this.courses = ["C#", "VB.NET", "SQL Server", "ASP.NET"];
                  })
-                 .controller("studentsController", function ($http, $route, $scope) {
+                 .controller("studentsController", function ($http, $route, $scope, $log) {
                      var vm = this;
 
                      $scope.$on("$locationChangeStart", function (event, next, current) {
-                         console.log("$locationChangeStart fired");
-                         console.log(event);
-                         console.log(next);
-                         console.log(current);
+                         $log.debug("$locationChangeStart fired");
+                         $log.debug(event);
+                         $log.debug(next);
+                         $log.debug(current);
                      });
 
                      $scope.$on("$routeChangeStart", function (event, next, current) {
-                         console.log("$routeChangeStart fired");
-                         console.log(event);
-                         console.log(next);
-                         console.log(current);
+                         $log.debug("$routeChangeStart fired");
+                         $log.debug(event);
+                         $log.debug(next);
+                         $log.debug(current);
                      });
 
                      vm.reloadData = function () {
