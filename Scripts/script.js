@@ -27,6 +27,11 @@ var app = angular
                              controller: "studentDetailsController",
                              controllerAs: "studentDetailsCtrl"
                          })
+                         .when("/studentsSearch/:name?", {
+                             templateUrl: "Templates/studentsSearch.html",
+                             controller: "studentsSearchController",
+                             controllerAs: "studentsSearchCtrl"
+                         })
                          .otherwise({
                              redirectTo: "/home"
                          })
@@ -38,8 +43,16 @@ var app = angular
                  .controller("coursesController", function () {
                      this.courses = ["C#", "VB.NET", "SQL Server", "ASP.NET"];
                  })
-                 .controller("studentsController", function ($http, $route, $scope, $log) {
+                 .controller("studentsController", function ($http, $route, $scope, $log, $location) {
                      var vm = this;
+
+                     vm.searchStudent = function () {
+                         if (vm.name) {
+                             $location.url("/studentsSearch/" + vm.name);
+                         } else {
+                             $location.url("/studentsSearch");
+                         }
+                     }
 
                      $scope.$on("$locationChangeStart", function (event, next, current) {
                          $log.debug("$locationChangeStart fired");
@@ -74,4 +87,25 @@ var app = angular
                     .then(function (response) {
                         vm.student = response.data
                     })
+                })
+                .controller("studentsSearchController", function ($http, $routeParams) {
+                    var vm = this;
+
+                    if ($routeParams.name) {
+                        $http({
+                            url: "StudentService.asmx/GetStudentsByName",
+                            params: { name: $routeParams.name },
+                            method: "get"
+                        })
+                       .then(function (response) {
+                           vm.students = response.data
+                       })
+                    }
+                    else
+                    {
+                        $http.get("StudentService.asmx/GetAllStudents")
+                          .then(function (response) {
+                              vm.students = response.data
+                          })
+                    }
                 });
