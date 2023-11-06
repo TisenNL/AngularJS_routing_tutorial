@@ -2,7 +2,7 @@
 /// <reference path="angular-route.js" />
 
 var app = angular
-                 .module("Demo", ["ngRoute"])
+                 .module("Demo", ["ui.router"])
                  .config(function ($routeProvider, $locationProvider) {
                      $routeProvider.caseInsensitiveMatch = true;
 
