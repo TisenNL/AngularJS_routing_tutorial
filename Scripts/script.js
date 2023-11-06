@@ -20,7 +20,15 @@ var app = angular
                          .when("/students", {
                              templateUrl: "Templates/students.html",
                              controller: "studentsController",
-                             controllerAs: "studentsCtrl"
+                             controllerAs: "studentsCtrl",
+                             resolve: {
+                                 studentsList: function ($http) {
+                                     return $http.get("StudentService.asmx/GetAllStudents")
+                                          .then(function (response) {
+                                              return response.data
+                                          })
+                                 }
+                             }
                          })
                          .when("/students/:id", {
                              templateUrl: "Templates/studentDetails.html",
@@ -43,7 +51,7 @@ var app = angular
                  .controller("coursesController", function () {
                      this.courses = ["C#", "VB.NET", "SQL Server", "ASP.NET"];
                  })
-                 .controller("studentsController", function ($http, $route, $scope, $log, $location) {
+                 .controller("studentsController", function (studentsList, $route, $location) {
                      var vm = this;
 
                      vm.searchStudent = function () {
@@ -54,28 +62,11 @@ var app = angular
                          }
                      }
 
-                     $scope.$on("$locationChangeStart", function (event, next, current) {
-                         $log.debug("$locationChangeStart fired");
-                         $log.debug(event);
-                         $log.debug(next);
-                         $log.debug(current);
-                     });
-
-                     $scope.$on("$routeChangeStart", function (event, next, current) {
-                         $log.debug("$routeChangeStart fired");
-                         $log.debug(event);
-                         $log.debug(next);
-                         $log.debug(current);
-                     });
-
                      vm.reloadData = function () {
                          $route.reload();
                      }
 
-                     $http.get("StudentService.asmx/GetAllStudents")
-                          .then(function (response) {
-                              vm.students = response.data
-                          })
+                     vm.students = studentsList;
                  })
                 .controller("studentDetailsController", function ($http, $routeParams) {
                     var vm = this;
