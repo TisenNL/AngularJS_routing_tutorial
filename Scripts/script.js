@@ -3,9 +3,9 @@
 
 var app = angular
                  .module("Demo", ["ui.router"])
-                 .config(function ($stateProvider) {
-                     //$routeProvider.caseInsensitiveMatch = true;
-
+                 .config(function ($stateProvider, $urlMatcherFactoryProvider) {
+                     
+                     $urlMatcherFactoryProvider.caseInsensitive(true);
                      $stateProvider
                          .state("home", {
                              url: "/home",
