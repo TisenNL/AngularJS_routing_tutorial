@@ -33,11 +33,12 @@ var app = angular
                                  }
                              }
                          })
-                     //    .when("/students/:id", {
-                     //        templateUrl: "Templates/studentDetails.html",
-                     //        controller: "studentDetailsController",
-                     //        controllerAs: "studentDetailsCtrl"
-                     //    })
+                         .state("studentDetails", {
+                             url: "/students/:id",
+                             templateUrl: "Templates/studentDetails.html",
+                             controller: "studentDetailsController",
+                             controllerAs: "studentDetailsCtrl"
+                         })
                      //    .when("/studentsSearch/:name?", {
                      //        templateUrl: "Templates/studentsSearch.html",
                      //        controller: "studentsSearchController",
@@ -71,17 +72,17 @@ var app = angular
 
                      vm.students = studentsList;
                  })
-                //.controller("studentDetailsController", function ($http, $routeParams) {
-                //    var vm = this;
-                //    $http({
-                //        url: "StudentService.asmx/GetStudent",
-                //        params: { id: $routeParams.id },
-                //        method: "get"
-                //    })
-                //    .then(function (response) {
-                //        vm.student = response.data
-                //    })
-                //})
+                .controller("studentDetailsController", function ($http, $stateParams) {
+                    var vm = this;
+                    $http({
+                        url: "StudentService.asmx/GetStudent",
+                        params: { id: $stateParams.id },
+                        method: "get"
+                    })
+                    .then(function (response) {
+                        vm.student = response.data
+                    })
+                })
                 //.controller("studentsSearchController", function ($http, $routeParams) {
                 //    var vm = this;
 

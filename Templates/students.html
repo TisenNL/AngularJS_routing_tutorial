@@ -4,7 +4,7 @@ name : <input type="text" ng-model="studentsCtrl.name" />
 <button ng-click="studentsCtrl.searchStudent()">Search</button>
 <ul>
     <li ng-repeat="student in studentsCtrl.students">
-        <a href="students/{{student.id}}">
+        <a ui-sref="studentDetails({id:student.id})">
         {{student.name}}
         </a>
     </li>
