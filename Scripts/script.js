@@ -3,7 +3,7 @@
 
 var app = angular
                  .module("Demo", ["ui.router"])
-                 .config(function ($stateProvider, $urlMatcherFactoryProvider, $urlRouterProvider) {
+                 .config(function ($stateProvider, $urlMatcherFactoryProvider, $urlRouterProvider, $locationProvider) {
                      $urlRouterProvider.otherwise("/home")
                      $urlMatcherFactoryProvider.caseInsensitive(true);
                      $stateProvider
@@ -54,7 +54,7 @@ var app = angular
                              controllerAs: "studentsSearchCtrl"
                          })
                    
-                     //$locationProvider.html5Mode(true);
+                     $locationProvider.html5Mode(true);
                  })
                  .controller("homeController", function ($state) {
                      this.message = "Home Page";
