@@ -26,3 +26,8 @@ a{
     display:block;
     padding:5px
 }
+
+.activeState{
+    background-color: black;
+    color: white;
+}
