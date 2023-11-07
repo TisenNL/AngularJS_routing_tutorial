@@ -84,6 +84,7 @@
     <Content Include="Templates\courses.html" />
     <Content Include="Templates\home.html" />
     <Content Include="Templates\studentDetails.html" />
+    <Content Include="Templates\studentParent.html" />
     <Content Include="Templates\students.html" />
     <Content Include="Templates\studentsSearch.html" />
     <Content Include="Web.config" />
@@ -95,6 +96,7 @@
       <DependentUpon>StudentService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="studentTotals.cs" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

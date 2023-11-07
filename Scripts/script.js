@@ -27,8 +27,24 @@ var app = angular
                                  customData2: "Courses State Custom Data 2",
                              }
                          })
-                         .state("students", {
+                         .state("studentParent", {
                              url: "/students",
+                             controller: "studentParentController",
+                             controllerAs: "stdParentCtrl",
+                             templateUrl: "Templates/studentParent.html",
+                             resolve: {
+                                 studentTotals: function ($http) {
+                                     return $http.get("StudentService.asmx/GetStudentTotals")
+                                             .then(function (response) {
+                                                 return response.data;
+                                             })
+                                 }
+                             },
+                             abstract: true
+
+                         })
+                         .state("studentParent.students", {
+                             url: "/",
                              templateUrl: "Templates/students.html",
                              controller: "studentsController",
                              controllerAs: "studentsCtrl",
@@ -41,8 +57,8 @@ var app = angular
                                  }
                              }
                          })
-                         .state("studentDetails", {
-                             url: "/students/:id",
+                         .state("studentParent.studentDetails", {
+                             url: "/:id",
                              templateUrl: "Templates/studentDetails.html",
                              controller: "studentDetailsController",
                              controllerAs: "studentDetailsCtrl"
@@ -56,6 +72,11 @@ var app = angular
                    
                      $locationProvider.html5Mode(true);
                  })
+                 .controller("studentParentController", function (studentTotals) {
+                     this.males = studentTotals.males;
+                     this.females = studentTotals.females;
+                     this.total = studentTotals.total;
+                 })
                  .controller("homeController", function ($state) {
                      this.message = "Home Page";
 
@@ -68,7 +89,7 @@ var app = angular
                  .controller("coursesController", function () {
                      this.courses = ["C#", "VB.NET", "SQL Server", "ASP.NET"];
                  })
-                 .controller("studentsController", function (studentsList, $state, $location) {
+                 .controller("studentsController", function (studentsList, $state, $location, studentTotals) {
                      var vm = this;
 
                      vm.searchStudent = function () {
@@ -80,6 +101,7 @@ var app = angular
                      }
 
                      vm.students = studentsList;
+                     vm.studentTotals = studentTotals;
                  })
                 .controller("studentDetailsController", function ($http, $stateParams) {
                     var vm = this;
