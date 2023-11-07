@@ -45,23 +45,38 @@ var app = angular
                          })
                          .state("studentParent.students", {
                              url: "/",
-                             templateUrl: "Templates/students.html",
-                             controller: "studentsController",
-                             controllerAs: "studentsCtrl",
-                             resolve: {
-                                 studentsList: function ($http) {
-                                     return $http.get("StudentService.asmx/GetAllStudents")
-                                          .then(function (response) {
-                                              return response.data
-                                          })
+                             views: {
+                                 "studentData": {
+                                     templateUrl: "Templates/students.html",
+                                     controller: "studentsController",
+                                     controllerAs: "studentsCtrl",
+                                     resolve: {
+                                         studentsList: function ($http) {
+                                             return $http.get("StudentService.asmx/GetAllStudents")
+                                                  .then(function (response) {
+                                                      return response.data
+                                                  })
+                                         }
+                                     }
+                                 },
+                                 "totalData": {
+                                     templateUrl: "Templates/studentsTotal.html",
+                                     controller: "studentsTotalController",
+                                     controllerAs: "studentsTotalCtrl"
                                  }
                              }
+                             
                          })
                          .state("studentParent.studentDetails", {
                              url: "/:id",
-                             templateUrl: "Templates/studentDetails.html",
-                             controller: "studentDetailsController",
-                             controllerAs: "studentDetailsCtrl"
+                             views: {
+                                 "studentData": {
+                                     templateUrl: "Templates/studentDetails.html",
+                                     controller: "studentDetailsController",
+                                     controllerAs: "studentDetailsCtrl"
+                                 }
+                             }
+                             
                          })
                          .state("studentsSearch", {
                              url:"/studentsSearch/:name",
@@ -71,6 +86,9 @@ var app = angular
                          })
                    
                      $locationProvider.html5Mode(true);
+                 })
+                 .controller("studentsTotalController", function (studentTotals) {
+                     this.total = studentTotals.total;
                  })
                  .controller("studentParentController", function (studentTotals) {
                      this.males = studentTotals.males;
